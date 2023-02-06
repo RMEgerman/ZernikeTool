@@ -184,10 +184,10 @@ def sagsign(R,dz):
     return sign
 
 def ZernikeTerms():
-    mm = list(range(2,16))
-    NN = []
-    for i in range(len(mm)-1):
-        NN.append(sum(range(mm[i+1])))   
+    mm = list(range(2,17))
+    NN = [3,4,6,10,15,21,28,36,45,55,66,78,91,105]
+#    for i in range(len(mm)-1):
+#        NN.append(sum(range(mm[i+1])))   
     return NN, mm
 
 def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
