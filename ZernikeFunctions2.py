@@ -2,7 +2,7 @@
 """
 Created on Fri Jun 17 21:23:19 2022
 
-@author: Jan de Vreugd
+@author: Jan de Vreugd & Robert Egerman
 """
 
 import numpy as np
@@ -22,7 +22,7 @@ from scipy.interpolate import interp1d
 def readme():
     with st.expander('read me'):
         st.write("""
-    With this streamlit web-app a Zernike decomposation can be made of sag-data of circular shaped optics. \n
+    With this streamlit web-app a Zernike Decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
     The data-file should be in .xlsx or .txt format. \n
     
