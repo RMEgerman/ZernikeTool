@@ -110,10 +110,10 @@ def dataselection(data, shapeFile):
             
             x = data.iloc[:,columnx-1].to_numpy()
             x = x.reshape((len(x)))
-            x = x - np.mean(x)        
+#            x = x - np.mean(x)        
             y = data.iloc[:,columny-1].to_numpy()
             y = y.reshape((len(y)))
-            y = y - np.mean(y)
+#            y = y - np.mean(y)
             dz = data.iloc[:,columnz-1].to_numpy()
             dz = dz.reshape((len(dz)))
             
