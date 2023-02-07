@@ -209,24 +209,24 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     
         Zs = np.zeros([len(rho),k_inf+1])
         
-        if abs(m)-n == 0:
-            #print('boe')
-            k = 0
+#        if abs(m)-n == 0:
+#            #print('boe')
+#            k = 0
+#            F1 = np.math.factorial(n-k)
+#            F2 = np.math.factorial(k)
+#            F3 = np.math.factorial(int((n+abs(m))/2) - k )
+#            F4 = np.math.factorial(int((n-abs(m))/2) - k )
+#            Zs = (-1)**k*F1/(F2*F3*F4)*rho**(n-2*k)
+#        else:
+            
+        for k in range(int((n-abs(m))/2)+1):
             F1 = np.math.factorial(n-k)
             F2 = np.math.factorial(k)
             F3 = np.math.factorial(int((n+abs(m))/2) - k )
             F4 = np.math.factorial(int((n-abs(m))/2) - k )
-            Zs = (-1)**k*F1/(F2*F3*F4)*rho**(n-2*k)
-        else:
-            
-            for k in range(int((n-abs(m))/2)+1):
-                F1 = np.math.factorial(n-k)
-                F2 = np.math.factorial(k)
-                F3 = np.math.factorial(int((n+abs(m))/2) - k )
-                F4 = np.math.factorial(int((n-abs(m))/2) - k )
-                Ri = (-1)**k*F1/(F2*F3*F4)*rho**(n-2*k)
-                Zs[:,k] = Ri  
-            Zs = np.sum(Zs,axis=1)
+            Ri = (-1)**k*F1/(F2*F3*F4)*rho**(n-2*k)
+            s[:,k] = Ri  
+        Zs = np.sum(Zs,axis=1)
         
         if m >= 0:    
             Zs = Zs.reshape(len(Zs))*np.cos(abs(m)*phi)
