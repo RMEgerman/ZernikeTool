@@ -209,7 +209,7 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     
         Zs = np.zeros([len(rho),k_inf+1])
         
-        if (abs(m)-n == 0) and (m == 0):
+        if (abs(m)-n == 0):
             #print('boe')
             k = 0
             F1 = np.math.factorial(n-k)
