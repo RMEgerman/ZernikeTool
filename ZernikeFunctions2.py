@@ -2,7 +2,7 @@
 """
 Created on Fri Jun 17 21:23:19 2022
 
-@author: Jan de Vreugd
+@author: Jan de Vreugd & RM Egerman
 """
 
 import numpy as np
@@ -110,15 +110,15 @@ def dataselection(data, shapeFile):
             
             x = data.iloc[:,columnx-1].to_numpy()
             x = x.reshape((len(x)))
-            x = x - np.mean(x)        
+#            x = x - np.mean(x)        
             y = data.iloc[:,columny-1].to_numpy()
             y = y.reshape((len(y)))
-            y = y - np.mean(y)
+#           y = y - np.mean(y)
             dz = data.iloc[:,columnz-1].to_numpy()
             dz = dz.reshape((len(dz)))
             
             R = np.sqrt(x**2 + y**2)
-            phi = np.arctan2(y,x)
+            phi = np.arctan2(x,y)
             rho = R/np.max(R)
             
             return x, y, dz, R, phi, rho 
@@ -209,7 +209,7 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     
         Zs = np.zeros([len(rho),k_inf+1])
         
-        if (abs(m)-n == 0) and (n == 0):
+        if (abs(m)-n == 0) and (m == 0):
             #print('boe')
             k = 0
             F1 = np.math.factorial(n-k)
