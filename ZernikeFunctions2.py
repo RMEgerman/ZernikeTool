@@ -2,7 +2,7 @@
 """
 Created on Fri Jun 17 21:23:19 2022
 
-@author: Jan de Vreugd & Robert Egerman
+@author: Jan de Vreugd
 """
 
 import numpy as np
@@ -22,9 +22,9 @@ from scipy.interpolate import interp1d
 def readme():
     with st.expander('read me'):
         st.write("""
-    With this streamlit web-app a Zernike Decomposition can be made of sag-data of circular shaped optics. \n
+    With this streamlit web-app a Zernike decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
-    The data-file should be in .xlsx or .txt format. \n
+    The data-file should be in .xlsx or .txt format. Smile :-) \n
     
         """)
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
@@ -110,10 +110,10 @@ def dataselection(data, shapeFile):
             
             x = data.iloc[:,columnx-1].to_numpy()
             x = x.reshape((len(x)))
-#            x = x - np.mean(x)        
+            x = x - np.mean(x)        
             y = data.iloc[:,columny-1].to_numpy()
             y = y.reshape((len(y)))
-#            y = y - np.mean(y)
+            y = y - np.mean(y)
             dz = data.iloc[:,columnz-1].to_numpy()
             dz = dz.reshape((len(dz)))
             
@@ -184,10 +184,10 @@ def sagsign(R,dz):
     return sign
 
 def ZernikeTerms():
-    mm = list(range(2,17))
-    NN = [3,4,6,10,15,21,28,36,45,55,66,78,91,105]
-#    for i in range(len(mm)-1):
-#        NN.append(sum(range(mm[i+1])))   
+    mm = list(range(2,16))
+    NN = []
+    for i in range(len(mm)-1):
+        NN.append(sum(range(mm[i+1])))   
     return NN, mm
 
 def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
@@ -225,8 +225,8 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
             F3 = np.math.factorial(int((n+abs(m))/2) - k )
             F4 = np.math.factorial(int((n-abs(m))/2) - k )
             Ri = (-1)**k*F1/(F2*F3*F4)*rho**(n-2*k)
-            s[:,k] = Ri  
-        Zs = np.sum(Zs,axis=1)
+            Zs[:,k] = Ri  
+            Zs = np.sum(Zs,axis=1)
         
         if m >= 0:    
             Zs = Zs.reshape(len(Zs))*np.cos(abs(m)*phi)
