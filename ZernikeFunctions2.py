@@ -24,7 +24,7 @@ def readme():
         st.write("""
     With this streamlit web-app a Zernike decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
-    The data-file should be in .xlsx or .txt format. arctan2(y,x) \n
+    The data-file should be in .xlsx or .txt format. arctan2(y,x), fix tip tilt \n
     
         """)
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
@@ -120,8 +120,8 @@ def dataselection(data, shapeFile):
             R = np.sqrt(x**2 + y**2)
             phi = np.arctan2(y,x)
             rho = R/np.max(R)
-            
-            return x, y, dz, R, phi, rho 
+            Rmax = np.max(R)
+            return x, y, dz, R, phi, rho , Rmax
         
 def SFE_calc(dz,UnitFactor):
     SFE  = np.round(np.std(dz)  * UnitFactor,2)
@@ -263,10 +263,10 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
         
     return ZernikeTable
 
-def PistonTipTiltTableFunc(Xlinear, PTT):
+def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax):
     PistonTable = [str(np.format_float_scientific(PTT[0],precision=4))]
-    
-    TipTiltTable = [' ', str(np.format_float_scientific(PTT[1],precision=4)),str(np.format_float_scientific(PTT[2],precision=4))]
+#   TipTiltTable = [' ', str(np.format_float_scientific(PTT[1],precision=4)),str(np.format_float_scientific(PTT[2],precision=4))]    
+    TipTiltTable = [' ', str(np.format_float_scientific(np.arctan2(2*Rmax, PVs(1)) ,precision=4)),str(np.format_float_scientific( np.arctan2(2*Rmax, PVs(2))  ,precision=4))]    
 
     for i in range(1,len(Xlinear)+4):
         PistonTable.append(' ')
@@ -327,7 +327,7 @@ def main():
             UnitFactor = 1E6
         
         with st.sidebar:
-            x,y,dz,R, phi, rho = dataselection(data,shapeFile)
+            x,y,dz,R, phi, rho , Rmax= dataselection(data,shapeFile)
             dzPTT, PTT = TipTilt(x, y, dz)
             xi,yi = gridarrays(x,y,GridSize) 
 
@@ -447,7 +447,7 @@ def main():
                     plotlyfunc(x,y,xi,yi,ZernikeDelta,UnitFactor, '(' + ZernikeOption + ')' + ' minus Zernikes:')                        
             
             with st.expander('Zernike Table'):
-                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT)
+                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT,PVs,Rmax)
                 SFEColumn = SFEs
                 SFEColumn = np.append(SFEColumn, ' ')
                 SFEColumn = np.append(SFEColumn,  str(np.round(np.std(dz)*UnitFactor,3))    )
