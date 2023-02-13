@@ -266,7 +266,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
 def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax):
     PistonTable = [str(np.format_float_scientific(PTT[0],precision=4))]
 #   TipTiltTable = [' ', str(np.format_float_scientific(PTT[1],precision=4)),str(np.format_float_scientific(PTT[2],precision=4))]    
-    TipTiltTable = [' ', str(np.format_float_scientific(np.arctan2(2*Rmax, PVs(1)) ,precision=4)),str(np.format_float_scientific( np.arctan2(2*Rmax, PVs(2))  ,precision=4))]    
+    TipTiltTable = [' ', str(np.format_float_scientific(np.arctan2(2*Rmax, PVs[1]) ,precision=4)),str(np.format_float_scientific( np.arctan2(2*Rmax, PVs[2])  ,precision=4))]    
 
     for i in range(1,len(Xlinear)+4):
         PistonTable.append(' ')
