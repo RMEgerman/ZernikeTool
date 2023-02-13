@@ -24,7 +24,7 @@ def readme():
         st.write("""
     With this streamlit web-app a Zernike decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
-    The data-file should be in .xlsx or .txt format. Smile :-) 9:30 \n
+    The data-file should be in .xlsx or .txt format. arctan2(y,x) \n
     
         """)
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
@@ -118,7 +118,7 @@ def dataselection(data, shapeFile):
             dz = dz.reshape((len(dz)))
             
             R = np.sqrt(x**2 + y**2)
-            phi = np.arctan2(x,y)
+            phi = np.arctan2(y,x)
             rho = R/np.max(R)
             
             return x, y, dz, R, phi, rho 
