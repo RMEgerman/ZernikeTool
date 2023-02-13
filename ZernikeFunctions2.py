@@ -263,8 +263,9 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
         
     return ZernikeTable
 
-def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor):
-    PistonTable = [str(np.format_float_scientific(PTT[0],precision=4))]
+def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor, Zernikes):
+#   PistonTable = [str(np.format_float_scientific(PTT[0],precision=4))]
+    PistonTable = [str(np.format_float_scientific( Zernikes[0,0],precision=4)) ]
 #   TipTiltTable = [' ', str(np.format_float_scientific(PTT[1],precision=4)),str(np.format_float_scientific(PTT[2],precision=4))]    
     TipTiltTable = [' ', str(np.format_float_scientific(np.arctan2(PVs[1],2*Rmax*UnitFactor) ,precision=4)),str(np.format_float_scientific( np.arctan2(PVs[2],2*Rmax*UnitFactor)  ,precision=4))]    
 
@@ -447,7 +448,7 @@ def main():
                     plotlyfunc(x,y,xi,yi,ZernikeDelta,UnitFactor, '(' + ZernikeOption + ')' + ' minus Zernikes:')                        
             
             with st.expander('Zernike Table'):
-                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT,PVs,Rmax,UnitFactor)
+                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT,PVs,Rmax,UnitFactor,Zernikes)
                 SFEColumn = SFEs
                 SFEColumn = np.append(SFEColumn, ' ')
                 SFEColumn = np.append(SFEColumn,  str(np.round(np.std(dz)*UnitFactor,3))    )
