@@ -261,7 +261,7 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor,Residuals,ZernikeNames2):
     j=0
     Residuals[j,:]=['Original Surface','Mag','Phas(deg)',str(np.round(np.std(dz) * UnitFactor,3)),str(np.round((np.max(dz) - np.min(dz)) * UnitFactor,3))]
     j=1
-    for i in range(0,13):
+    for i in range(0,m_max):
         m = B[i][0]
         n = B[i][1]
 #        print('i m n',i,m,n)
