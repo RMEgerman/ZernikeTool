@@ -193,7 +193,7 @@ def ZernikeTerms():
 def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
 
-    for i in range(1,55):
+    for i in range(1,m_max):
 #        for j in range(-i,i+1,2):
 #            A.append([j,i])
         nnn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
