@@ -24,7 +24,7 @@ def readme():
         st.write("""
     With this streamlit web-app a Zernike decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
-    The data-file should be in .xlsx or .txt format. R2
+    The data-file should be in .xlsx or .txt format. arctan2(y,x), fix tip tilt \n
     
         """)
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
@@ -190,26 +190,14 @@ def ZernikeTerms():
         NN.append(sum(range(mm[i+1])))   
     return NN, mm
 
-def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor,Residuals,ZernikeNames2):
+def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
-    B = [[0,0],[-1,1],[1,1],[2,0],[-2,2],[2,2],[-1,3],[1,3],[0,4],[-3,3],[3,3]]
-#    print('Hello')
-#    pv=str(np.round(np.std(dz) * UnitFactor,3))
-#    rms=str(np.round((np.max(dz) - np.min(dz)) * UnitFactor,3))
-#    Residuals[0,:]=['Argh','',pv,rms]
-#    Residuals[0,:]=['','',str(np.round(np.std(dz) * UnitFactor,3)),str(np.round((np.max(dz) - np.min(dz)) * UnitFactor,3))]
-
 
     for i in range(1,m_max):
-        for j in range(-i,i+1,2):
-            A.append([j,i])
+#        for j in range(-i,i+1,2):
         nn=np.ceil((-3+np.sqrt(9+8*i))/2.)
         mm=2*i-(nn*(nn+2))
         A.append([mm,nn])
-#    print('A')
-#    print(A)
-#    print('B')
-#    print(B)
     mnlist = ['Z[' + str(A[0][0]) + ']' +'[' + str(A[0][1]) + ']']        
     for i in range(1,len(A)):
         mnlist.append('Z[' + str(A[i][0]) + ']' +'[' + str(A[i][1]) + ']')
@@ -246,78 +234,15 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor,Residuals,ZernikeNames2):
             Zs = Zs.reshape(len(Zs))*np.cos(abs(m)*phi)
         else:
             Zs = Zs.reshape(len(Zs))*np.sin(abs(m)*phi)
-
             
         ZernikeInfluenceFunctions[:,i] = Zs
-#    print('A')
-#    print(A)
         
     #Xlinear = np.linalg.lstsq(ZernikeInfluenceFunctions,dz,rcond=None)[0] 
     Xlinear = np.dot(np.linalg.pinv(ZernikeInfluenceFunctions),dz)
     Zernikes = Xlinear*ZernikeInfluenceFunctions
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
-    DZ=dz
-    j=0
-    Residuals[j,:]=['Original Surface','Mag','Phas(deg)',str(np.round(np.std(dz) * UnitFactor,3)),str(np.round((np.max(dz) - np.min(dz)) * UnitFactor,3))]
-    j=1
-    for i in range(0,m_max):
-        m = B[i][0]
-        n = B[i][1]
-#        print('i m n',i,m,n)
-        if (m ==0 ) and (n == 0):
-            DZ=DZ-Zernikes[0,0]
-            mag=str(np.format_float_scientific( Zernikes[0,0] * UnitFactor ,precision=4))
-            phase='0.0'
-            resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
-            resRMS=str(np.round(np.std(DZ,axis=0) * UnitFactor,3))
-            Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
-#            print('j1')
-#            print(i,j,m,n)
-#            print(Residuals[:12,:])
-            j=j+1
-#            continue
-        elif (m == 0) and (n > 0):
-            DZ=DZ-Zernikes[:,i]
-            mag=str((PVs[i]/2.))
-            phase='0.0'
-            resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
-            resRMS=str(np.round(np.std(DZ,axis=0) * UnitFactor,3))
-            Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
-#            print('j2')
-#            print(i,j,m,n)
-#            print(Residuals[:12,:])
-            j=j+1
-#            continue
-        elif (m > 0) and (n > 0):
-            for k in range(i):
-#                print('M Match')
-#                print(i,k,-(B[k][0]),B[i][0],B[i][1])
-                if (-(B[k][0]) == B[i][0]) and (B[k][1] == B[i][1]):
-                    l=k
-#                    print('Match Found',l)
-                    break
-#            print('l',l)
-            DZ=DZ - Zernikes[:,i] - Zernikes[:,l]
-            mag=str((np.sqrt((PVs[i]**2)+(PVs[l])**2)))
-            phase=str(np.arctan2(PVs[i],PVs[l])*180./np.pi)
-            resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
-            resRMS=str(np.round(np.std(DZ,axis=0) * UnitFactor,3))
-            Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
-#            print('j3')
-#            print(i,j,m,n,l)
-#            print(Residuals[:12,:])
-            j=j+1
-#            continue
-#   print('Residuals')
-#   print(Residuals[:12,:])       
-#   print('Zernikes')
-#   print(Zernikes)
-#   print('SFEs')
-#   print(SFEs)
-#   print('PVs')
-#   print(PVs)   
-    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist,Residuals
+    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
 
 
 def ZernikeNamesFunc():
@@ -325,16 +250,7 @@ def ZernikeNamesFunc():
                     ' Coma 1', ' Coma 2',' Trefoil 2',' ', ' ', ' Spherical Aberration']
     for i in range(1000):
         ZernikeNames.append(' ')
-    return ZernikeNames    
-
-def ZernikeNamesFunc2():
-    ZernikeNames2 = [' Piston',' Tip',' Tilt',' Defocus',' Pri Astigmatism',' Pri Coma',
-                    '  Pri Spherical', ' PriTrefoil',' Sec Astigmatism',' Sec Coma', ' Sec Spherical', ' Pri Tetrafoil',
-                    ' Sec Trefoil',' Ter Astigmatism',' Ter Coma',' Ter Spherical',' Pri Pentafoil',' Sec Tetrafoil',
-                    ' Ter Trefoil',' Qua Astigmatism',' Qua Coma',' Qua Spherical',' Quin Spherical']
-    for i in range(1000):
-        ZernikeNames2.append(' ')
-    return ZernikeNames2     
+    return ZernikeNames        
 
 def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable = []
@@ -349,7 +265,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
         
     return ZernikeTable
 
-def PistonTipTiltTableFunc(Xlinear, PVs, Rmax, UnitFactor, Zernikes):
+def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor, Zernikes):
 #   PistonTable = [str(np.format_float_scientific(PTT[0],precision=4))]
     PistonTable = [str(np.format_float_scientific( Zernikes[0,0],precision=4)) ]
 #   TipTiltTable = [' ', str(np.format_float_scientific(PTT[1],precision=4)),str(np.format_float_scientific(PTT[2],precision=4))]    
@@ -377,8 +293,6 @@ def plotly_function(x,y,title):
     fig = fig.update_yaxes(title_text = 'Y-coordinates')
     fig.update_layout(legend = dict(font = dict(size = fsize, color = "black")))
     st.plotly_chart(fig,use_container_width=False)
-    
-#def MagnitudeAngleTableFunc(Xlinear,PVs,Rmax,UnitFactor,Zernikes):    
 
 # ********** THE STREAMLIT ZERNIKE APP STARTS HERE: ************************
 
@@ -500,13 +414,9 @@ def main():
             if ZernikeOption == 'Original data - UserDefined A-Sphere':
                 data4Zernike = FitAsphereUser
                 
-            Residuals=np.empty(shape=[1000,5],dtype="<U10")
-            ZernikeNames2 = ZernikeNamesFunc2()
-            Zernikes, ZernikeInfluenceFunctions, Xlinear,m,ZernikeModeNames,SFEs,PVs,mnlist,Residuals = ZernikeDecomposition(rho, phi, m_max, dz,UnitFactor, Residuals,ZernikeNames2)    
-#            Zernikes, ZernikeInfluenceFunctions, Xlinear,m,ZernikeModeNames,SFEs,PVs,mnlist = ZernikeDecomposition(rho, phi, m_max, data4Zernike,UnitFactor)
+            Zernikes, ZernikeInfluenceFunctions, Xlinear,m,ZernikeModeNames,SFEs,PVs,mnlist = ZernikeDecomposition(rho, phi, m_max, data4Zernike,UnitFactor)
             ZernikeNames = ZernikeNamesFunc()
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames)
-#            ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2)
             
 
             with st.expander('Zernike decompostion plots, sorted'):
@@ -540,7 +450,7 @@ def main():
                     plotlyfunc(x,y,xi,yi,ZernikeDelta,UnitFactor, '(' + ZernikeOption + ')' + ' minus Zernikes:')                        
             
             with st.expander('Zernike Table'):
-                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PVs,Rmax,UnitFactor,Zernikes)
+                PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT,PVs,Rmax,UnitFactor,Zernikes)
                 SFEColumn = SFEs
                 SFEColumn = np.append(SFEColumn, ' ')
                 SFEColumn = np.append(SFEColumn,  str(np.round(np.std(dz)*UnitFactor,3))    )
@@ -561,14 +471,6 @@ def main():
 
                 st.table(dfTable.style)
                 
-#            with st.expander('Zernike Table 2'):
-#                MagnitudeAngleTable = MagnitudeAngleTableFunc(Xlinear,PVs,Rmax,UnitFactor,Zernikes,dz)
-#                
-#                if units == 'meters':
-#                    dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [m]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
-#                elif units == 'millimeters':
-#                    dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [mm]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
-               
         with st.expander('X and Y locations of all datapoints'):
             plotly_function(x,y,'data coordinates')
                           
