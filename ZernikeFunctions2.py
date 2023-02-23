@@ -194,8 +194,11 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
 
     for i in range(1,m_max):
-        for j in range(-i,i+1,2):
-            A.append([j,i])
+#        for j in range(-i,i+1,2):
+#            A.append([j,i])
+        nn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
+        mm=int(2*i-(nn*(nn+2)))
+        A.append([mm,nn])
     mnlist = ['Z[' + str(A[0][0]) + ']' +'[' + str(A[0][1]) + ']']        
     for i in range(1,len(A)):
         mnlist.append('Z[' + str(A[i][0]) + ']' +'[' + str(A[i][1]) + ']')
