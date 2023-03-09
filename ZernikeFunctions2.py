@@ -198,8 +198,8 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
 #            A.append([j,i])
         nnn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
         mmm=int(2*i-(nnn*(nnn+2)))
-        A.append([mmm,nnn])    
-        mnlist = ['Z[' + str(A[0][0]) + ']' +'[' + str(A[0][1]) + ']']        
+        A.append([mmm,nnn])
+    mnlist = ['Z[' + str(A[0][0]) + ']' +'[' + str(A[0][1]) + ']']        
     for i in range(1,len(A)):
         mnlist.append('Z[' + str(A[i][0]) + ']' +'[' + str(A[i][1]) + ']')
     
@@ -243,8 +243,8 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     Zernikes = Xlinear*ZernikeInfluenceFunctions
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
-    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m_max,A,SFEs,PVs,mnlist
-#    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
+    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
+
 
 def ZernikeNamesFunc():
     ZernikeNames = [' Piston',' Tip',' Tilt',' Astigmatism 1', ' Defocus',' Astigmatism 2',' Trefoil 1',
@@ -263,8 +263,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable.append('Original data:')
     ZernikeTable.append('Quadratic Sum Zernike Terms:')
     ZernikeTable.append('Residual error:')
-    print('Zernike Table')
-    print(ZernikeTable)
+        
     return ZernikeTable
 
 def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor, Zernikes):
@@ -346,7 +345,7 @@ def main():
             
             if ZernikeDecomposition_opt:
                 NN, mm = ZernikeTerms()
-                default_NN = NN.index(6)
+                default_NN = NN.index(10)
                 N_Zernikes = st.selectbox('# Zernike terms: ',NN,index = default_NN)
                 index = NN.index(N_Zernikes)  
                 m_max = mm[index]
