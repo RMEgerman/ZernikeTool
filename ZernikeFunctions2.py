@@ -462,7 +462,7 @@ def main():
                 PVs[1] = m_max
                 PVs[2] = N_Zernikes  
                 PVs[3] = index
-                PVs[4] = default_NN
+                # PVs[4] = default_NN
                 PVs = np.append(PVs, ' ')
                 PVs = np.append(PVs, str(np.round((np.max(dz) - np.min(dz))*UnitFactor , 3)) )
                 PVs = np.append(PVs, ' ' )
