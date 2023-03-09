@@ -458,10 +458,10 @@ def main():
                 SFEColumn = np.append(SFEColumn,  np.round(np.sum(np.sqrt(np.sum(SFEs**2))),3) )
                 SFEColumn = np.append(SFEColumn,  str(np.round(np.std(ZernikeDelta)*UnitFactor,3))    )
                 
-                PVs[0] = len(mnlist)
-                PVs[1] = m_max
-                PVs[2] = N_Zernikes  
-                PVs[3] = index
+                # PVs[0] = len(mnlist)
+                # PVs[1] = m_max
+                # PVs[2] = N_Zernikes  
+                # PVs[3] = index
                 # PVs[4] = default_NN
                 PVs = np.append(PVs, ' ')
                 PVs = np.append(PVs, str(np.round((np.max(dz) - np.min(dz))*UnitFactor , 3)) )
@@ -472,7 +472,7 @@ def main():
                 if units == 'meters':
                     dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [m]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
                 elif units == 'millimeters':
-                    dfTable = pd.DataFrame({'Zernike Mode:' : PVs }) 
+                    dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [mm]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
                 #st.write(dfTable) 
 
                 st.table(dfTable.style)
