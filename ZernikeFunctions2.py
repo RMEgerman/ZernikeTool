@@ -460,7 +460,7 @@ def main():
                 
                 PVs[0] = len(mnlist)
                 PVs[1] = m_max
-#                PVs[2] = NN             
+                PVs[2] = N_Zernikes             
                 PVs = np.append(PVs, ' ')
                 PVs = np.append(PVs, str(np.round((np.max(dz) - np.min(dz))*UnitFactor , 3)) )
                 PVs = np.append(PVs, ' ' )
