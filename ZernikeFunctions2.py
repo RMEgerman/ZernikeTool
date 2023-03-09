@@ -345,6 +345,7 @@ def main():
             
             if ZernikeDecomposition_opt:
                 NN, mm = ZernikeTerms()
+                NN = [3,4,6,10,15,21,28,37,45,55,66,78,91,105]
                 default_NN = NN.index(10)
                 N_Zernikes = st.selectbox('# Zernike terms: ',NN,index = default_NN)
                 index = NN.index(N_Zernikes)  
