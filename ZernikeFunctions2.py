@@ -243,8 +243,8 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     Zernikes = Xlinear*ZernikeInfluenceFunctions
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
-    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
-
+    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m_max,A,SFEs,PVs,mnlist
+#    return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
 
 def ZernikeNamesFunc():
     ZernikeNames = [' Piston',' Tip',' Tilt',' Astigmatism 1', ' Defocus',' Astigmatism 2',' Trefoil 1',
