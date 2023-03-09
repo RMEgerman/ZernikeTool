@@ -257,7 +257,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable = []
     ZernikeNames = ZernikeNamesFunc()
     
-    for i in range(len(55)):
+    for i in range(1,55):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
     ZernikeTable.append(' ')
     ZernikeTable.append('Original data:')
