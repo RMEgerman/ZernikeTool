@@ -257,13 +257,14 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable = []
     ZernikeNames = ZernikeNamesFunc()
     
-    for i in range(len(A)):
+    for i in range(len(mnlist)):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
     ZernikeTable.append(' ')
     ZernikeTable.append('Original data:')
     ZernikeTable.append('Quadratic Sum Zernike Terms:')
     ZernikeTable.append('Residual error:')
-        
+    print('Zernike Table')
+    print(Zernike Table)
     return ZernikeTable
 
 def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor, Zernikes):
