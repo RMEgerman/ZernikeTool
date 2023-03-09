@@ -194,11 +194,11 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
 
     for i in range(1,m_max):
-        for j in range(-i,i+1,2):
-            A.append([j,i])
-#        nnn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
-#       mmm=int(2*i-(nnn*(nnn+2)))
-#        A.append([mmm,nnn])    
+#        for j in range(-i,i+1,2):
+#            A.append([j,i])
+        nnn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
+        mmm=int(2*i-(nnn*(nnn+2)))
+        A.append([mmm,nnn])    
         mnlist = ['Z[' + str(A[0][0]) + ']' +'[' + str(A[0][1]) + ']']        
     for i in range(1,len(A)):
         mnlist.append('Z[' + str(A[i][0]) + ']' +'[' + str(A[i][1]) + ']')
@@ -257,7 +257,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable = []
     ZernikeNames = ZernikeNamesFunc()
     
-    for i in range(len(mnlist)):
+    for i in range(len(55)):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
     ZernikeTable.append(' ')
     ZernikeTable.append('Original data:')
