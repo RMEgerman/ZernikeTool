@@ -458,6 +458,9 @@ def main():
                 SFEColumn = np.append(SFEColumn,  np.round(np.sum(np.sqrt(np.sum(SFEs**2))),3) )
                 SFEColumn = np.append(SFEColumn,  str(np.round(np.std(ZernikeDelta)*UnitFactor,3))    )
                 
+                PVs[0] = len(mnlist)
+                PVs[1] = mm
+                PVs[2] = NN             
                 PVs = np.append(PVs, ' ')
                 PVs = np.append(PVs, str(np.round((np.max(dz) - np.min(dz))*UnitFactor , 3)) )
                 PVs = np.append(PVs, ' ' )
