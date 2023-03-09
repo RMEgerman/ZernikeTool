@@ -264,7 +264,7 @@ def ZernikeTableFunc(mnlist, ZernikeNames):
     ZernikeTable.append('Quadratic Sum Zernike Terms:')
     ZernikeTable.append('Residual error:')
     print('Zernike Table')
-    print(Zernike Table)
+    print(ZernikeTable)
     return ZernikeTable
 
 def PistonTipTiltTableFunc(Xlinear, PTT, PVs, Rmax, UnitFactor, Zernikes):
