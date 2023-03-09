@@ -348,7 +348,7 @@ def main():
                 default_NN = NN.index(10)
                 N_Zernikes = st.selectbox('# Zernike terms: ',NN,index = default_NN)
                 index = NN.index(N_Zernikes)  
-                m_max = default_NN
+                m_max = mm[index]
                 # SortZernikes_opt = st.checkbox('Sort Zernikes',True)
                 if (SphereFit_opt==False) and (Asphere_M == False):
                     ZernikeOption = 'Original Data'
@@ -460,7 +460,9 @@ def main():
                 
                 PVs[0] = len(mnlist)
                 PVs[1] = m_max
-                PVs[2] = N_Zernikes             
+                PVs[2] = N_Zernikes  
+                PVs[3] = index
+                PVs[4] = default_NN
                 PVs = np.append(PVs, ' ')
                 PVs = np.append(PVs, str(np.round((np.max(dz) - np.min(dz))*UnitFactor , 3)) )
                 PVs = np.append(PVs, ' ' )
