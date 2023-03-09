@@ -467,7 +467,7 @@ def main():
                 if units == 'meters':
                     dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [m]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
                 elif units == 'millimeters':
-                    dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable, 'PV [nm]' : PVs, 'SFE [nm RMS]:' : SFEColumn, 'Piston [mm]:' : PistonTable, 'Tip Tilt angle [rad]:' : TipTiltTable}) 
+                    dfTable = pd.DataFrame({'Zernike Mode:' : ZernikeTable }) 
                 #st.write(dfTable) 
 
                 st.table(dfTable.style)
