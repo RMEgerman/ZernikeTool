@@ -428,7 +428,7 @@ def main():
                 data4Zernike = FitAsphereUser
                 
             Zernikes, ZernikeInfluenceFunctions, Xlinear,m,ZernikeModeNames,SFEs,PVs,mnlist = ZernikeDecomposition(rho, phi, m_max, data4Zernike,UnitFactor)
-            ZernikeNames = ZernikeNamesFunc()
+            ZernikeNames = ZernikeNamesFunc(m_max)
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
 
