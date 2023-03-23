@@ -337,7 +337,7 @@ def main():
         with st.sidebar:
             st.write(' \# data points = ' + str(shapeFile[0]) + ', # columns = ' + str(shapeFile[1]) )
             GridSize = st.slider('Select interpolation grid size for 3D plotting', 20, 300, (100))
-            units = st.radio('data units:', ('meters', 'millimeters'))
+            units = st.radio('data units:', ('millimeters', 'meters'))
             
         if units == 'meters':
             UnitFactor = 1E9
@@ -360,7 +360,7 @@ def main():
             if ZernikeDecomposition_opt:
                 NN, mm = ZernikeTerms()
                 NN = [3,4,6,10,15,21,28,37,45,55,66,78,91,105]
-                default_NN = NN.index(10)
+                default_NN = NN.index(4)
                 N_Zernikes = st.selectbox('# Zernike terms: ',NN,index = default_NN)
                 index = NN.index(N_Zernikes)  
                 m_max = N_Zernikes
@@ -379,7 +379,6 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 plotlyfunc(x,y,xi,yi,dz,UnitFactor, 'Original data:')
-            with col2:    
                 plotlyfunc(x,y,xi,yi,dzPTT,UnitFactor,  'Original data minus piston, tip and tilt:')
                 if units == 'meters':
                     st.write('piston = ' + str(np.round(1E6*PTT[0],3)) + ' $\mu$m')
