@@ -247,7 +247,7 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     if (m_max == 4):
         ro = [0,1,2,4,3]
         Zernikes[:,[0,1,2,3,4]]= Zernikes[:,ro]
-        np.delete(Zernikes,4,0)
+        Zernikes = np.delete(Zernikes,4,1)
         mnlist = [val for (_, val) in sorted(zip(ro, mnlist), key=lambda x: x[0])]
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
