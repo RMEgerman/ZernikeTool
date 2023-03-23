@@ -192,8 +192,9 @@ def ZernikeTerms():
 
 def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
-
-    for i in range(1,m_max):
+    if (m_max == 4):
+        m_max2 = 5
+    for i in range(1,m_max2):
 #        for j in range(-i,i+1,2):
 #            A.append([j,i])
         nnn=int(np.ceil((-3+np.sqrt(9+8*i))/2.))
@@ -235,12 +236,16 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
             Zs = Zs.reshape(len(Zs))*np.cos(abs(m)*phi)
         else:
             Zs = Zs.reshape(len(Zs))*np.sin(abs(m)*phi)
-            
+
         ZernikeInfluenceFunctions[:,i] = Zs
         
     #Xlinear = np.linalg.lstsq(ZernikeInfluenceFunctions,dz,rcond=None)[0] 
     Xlinear = np.dot(np.linalg.pinv(ZernikeInfluenceFunctions),dz)
     Zernikes = Xlinear*ZernikeInfluenceFunctions
+    if (m_max == 4):
+        ro = [0,1,2,4,3]
+        Zernikes[:,[0,1,2,3,4]]= Zernikes[:,ro]
+        mnlist = [val for (_, val) in sorted(zip(ro, mnlist), key=lambda x: x[0])]
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
     return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
