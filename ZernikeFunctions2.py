@@ -267,7 +267,8 @@ def ZernikeNamesFunc(m_max):
 def ZernikeTableFunc(mnlist, ZernikeNames, m_max):
     ZernikeTable = []
     ZernikeNames = ZernikeNamesFunc(m_max)
-    
+    if (m_max == 4):
+        mnlist=np.delete(mnlist,4,0)
     for i in range(len(mnlist)):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
     ZernikeTable.append(' ')
