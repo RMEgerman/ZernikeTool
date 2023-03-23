@@ -194,6 +194,8 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     A = [[0,0]]
     if (m_max == 4):
         m_max2 = 5
+    else:
+        m_max2=m_max
     for i in range(1,m_max2):
 #        for j in range(-i,i+1,2):
 #            A.append([j,i])
