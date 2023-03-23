@@ -250,7 +250,7 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
         Zernikes = np.delete(Zernikes,4,1)
         mnlist = [val for (_, val) in sorted(zip(ro, mnlist), key=lambda x: x[0])]
         A = [val for (_, val) in sorted(zip(ro, A), key=lambda x: x[0])]
-        A = np.delete(A,4,0)
+        A = A[:-1]
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
     return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
