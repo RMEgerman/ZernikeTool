@@ -246,11 +246,17 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     Zernikes = Xlinear*ZernikeInfluenceFunctions
     if (m_max == 4):
         ro = [0,1,2,4,3]
+        Xlinear[[0,1,2,3,4]]= Xlinear[ro]
         Zernikes[:,[0,1,2,3,4]]= Zernikes[:,ro]
-        Zernikes = np.delete(Zernikes,4,1)
+        ZernikeInfluenceFunctions[:,[0,1,2,3,4]]= ZernikeInfluenceFunctions[:,ro]
         mnlist = [val for (_, val) in sorted(zip(ro, mnlist), key=lambda x: x[0])]
+        mnlist = mnlist[:-1]
         A = [val for (_, val) in sorted(zip(ro, A), key=lambda x: x[0])]
         A = A[:-1]
+        Xlinear=np.delete(Xlinear,4,0)
+        Zernikes=np.delete(Zernikes,4,1)
+        ZernikeInfluenceFunctions=np.delete(ZernikeInfluenceFunctions,4,1)
+
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
     return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
