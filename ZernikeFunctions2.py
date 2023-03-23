@@ -42,19 +42,19 @@ def dataread(uploaded_file):
         if uploaded_file != 'TestFile_FEM.txt' and uploaded_file != 'TestFile_CMM.txt':
             filename,file_extension = os.path.splitext(uploaded_file.name)
             if file_extension == '.xlsx':
-                df = pd.read_excel(uploaded_file)
+                df = pd.read_excel(uploaded_file , comment="#")
             if file_extension ==  '.txt':
-                df = pd.read_csv(uploaded_file, sep = '\s+', header = None)
+                df = pd.read_csv(uploaded_file, sep = '\s+', header = None , comment="#")
             if file_extension == '.csv':
-                df = pd.read_csv(uploaded_file, sep = ',', header = None)
+                df = pd.read_csv(uploaded_file, sep = ',', header = None , comment="#")
             shapeFile = df.shape    
             return df, shapeFile
         elif uploaded_file ==  'TestFile_FEM.txt':
-            df = pd.read_csv('TestFile_FEM.txt', sep = '\s+', header = None)
+            df = pd.read_csv('TestFile_FEM.txt', sep = '\s+', header = None , comment="#")
             shapeFile = df.shape    
             return df, shapeFile
         elif uploaded_file ==  'TestFile_CMM.txt':
-            df = pd.read_csv('TestFile_CMM.txt', sep = '\s+', header = None)
+            df = pd.read_csv('TestFile_CMM.txt', sep = '\s+', header = None , comment="#")
             shapeFile = df.shape    
             return df, shapeFile
 
@@ -275,10 +275,7 @@ def ZernikeNamesFunc(m_max):
 def ZernikeTableFunc(mnlist, ZernikeNames, m_max):
     ZernikeTable = []
     ZernikeNames = ZernikeNamesFunc(m_max)
-    # if (m_max == 4):
-    #     mnlist2=np.delete(mnlist,4,0)
-    # else:
-    #     mnlist2=mnlist
+
     for i in range(len(mnlist)):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
     ZernikeTable.append(' ')
