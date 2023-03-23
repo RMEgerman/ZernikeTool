@@ -247,22 +247,26 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
     if (m_max == 4):
         ro = [0,1,2,4,3]
         Zernikes[:,[0,1,2,3,4]]= Zernikes[:,ro]
+        np.delete(Zernikes,4,0)
         mnlist = [val for (_, val) in sorted(zip(ro, mnlist), key=lambda x: x[0])]
     SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
     return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
 
 
-def ZernikeNamesFunc():
+def ZernikeNamesFunc(m_max):
     ZernikeNames = [' Piston',' Tip',' Tilt',' Astigmatism 1', ' Defocus',' Astigmatism 2',' Trefoil 1',
                     ' Coma 1', ' Coma 2',' Trefoil 2',' ', ' ', ' Spherical Aberration']
     for i in range(1000):
         ZernikeNames.append(' ')
+    if (m_max == 4):
+        ro = [0,1,2,4,3,5,6,7,8,9,10,11,12]
+        ZernikeNames = [val for (_, val) in sorted(zip(ro, ZernikeNames), key=lambda x: x[0])]
     return ZernikeNames        
 
-def ZernikeTableFunc(mnlist, ZernikeNames):
+def ZernikeTableFunc(mnlist, ZernikeNames, m_max):
     ZernikeTable = []
-    ZernikeNames = ZernikeNamesFunc()
+    ZernikeNames = ZernikeNamesFunc(m_max)
     
     for i in range(len(mnlist)):
         ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
@@ -425,7 +429,7 @@ def main():
                 
             Zernikes, ZernikeInfluenceFunctions, Xlinear,m,ZernikeModeNames,SFEs,PVs,mnlist = ZernikeDecomposition(rho, phi, m_max, data4Zernike,UnitFactor)
             ZernikeNames = ZernikeNamesFunc()
-            ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames)
+            ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
 
             with st.expander('Zernike decompostion plots, sorted'):
