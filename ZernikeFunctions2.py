@@ -448,9 +448,9 @@ def main():
                 col1, col2,col3,col4,col5,col6 = st.columns(6)
                 H = [col1,col2,col3,col4,col5,col6]
                 
-                for j in range(len(ZernikeModeNames)-1,0,-1):
+                for j in range(len(ZernikeModeNames)-1,-1,-1):
                     # i = np.argsort(SFEs)[-1-j]
-                    i=j
+                    i=j+1
                     plt.figure(i)
                     Zjan = griddata((x,y),ZernikeInfluenceFunctions[:,i],(xi,yi),method='cubic')
                     fig,ax = plt.subplots(figsize=(6,3))
