@@ -451,7 +451,7 @@ def main():
                 for j in range(m_max-1,-1,0):
                     # i = np.argsort(SFEs)[-1-j]
                     i=j
-                    plt.figure(i)
+                    plt.figure(i+1)
                     Zjan = griddata((x,y),ZernikeInfluenceFunctions[:,i],(xi,yi),method='cubic')
                     fig,ax = plt.subplots(figsize=(6,3))
                     pc = ax.pcolormesh(xi,yi,Zjan,cmap=cm.jet)
