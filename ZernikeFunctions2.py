@@ -19,6 +19,9 @@ from scipy.optimize import curve_fit
 import os
 from scipy.interpolate import interp1d
 
+def rms(x):
+    return np.sqrt(x.dot(x)/x.size)
+
 def readme():
     with st.expander('read me'):
         st.write("""
@@ -256,8 +259,10 @@ def ZernikeDecomposition(rho,phi,m_max,dz,UnitFactor):
         Xlinear=np.delete(Xlinear,4,0)
         Zernikes=np.delete(Zernikes,4,1)
         ZernikeInfluenceFunctions=np.delete(ZernikeInfluenceFunctions,4,1)
-
-    SFEs = np.round(np.std(Zernikes,axis=0) * UnitFactor,3)
+    SFEs = np.zeros((m_max))
+    for i in range(m_max):
+        RMS = np.round(rms(Zernikes[:,i]) * UnitFactor,3)
+        SFEs[i] = RMS
     PVs = np.round((np.max(Zernikes,axis=0) - np.min(Zernikes,axis=0)) * UnitFactor,3)
     return Zernikes, ZernikeInfluenceFunctions, Xlinear,m,A,SFEs,PVs,mnlist
 
