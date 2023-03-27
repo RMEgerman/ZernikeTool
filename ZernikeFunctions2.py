@@ -458,7 +458,7 @@ def main():
                     fig,ax = plt.subplots(figsize=(6,3))
                     pc = ax.pcolormesh(xi,yi,Zjan,cmap=cm.jet)
                     ax.set_aspect('equal', adjustable='box')
-                    ax.set_title('Zernike Mode: '+ ZernikeNames[i]  + '\n ' + 
+                    ax.set_title(ZernikeNames[i]  + '\n ' + 
                                  'n=' + str(ZernikeModeNames[i][1]) + ' m=' + str(ZernikeModeNames[i][0]) + ' i=' + str(i) +
                                  '\nPV = ' + str(PVs[i]) + ' nm' +
                                  '\nSFE = ' + str(SFEs[i]) + ' nm RMS' 
