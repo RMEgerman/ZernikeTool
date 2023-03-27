@@ -454,14 +454,14 @@ def main():
                 # for j in range(len(ZernikeModeNames)):
                 #     i = np.argsort(ZernikeModeNames)[-1-j]
                     plt.figure(i+1)
-                    Zjan = griddata((x,y),ZernikeInfluenceFunctions[:,i],(xi,yi),method='cubic')
+                    Zjan = griddata((x,y),ZernikeInfluenceFunctions[:,-i],(xi,yi),method='cubic')
                     fig,ax = plt.subplots(figsize=(6,3))
                     pc = ax.pcolormesh(xi,yi,Zjan,cmap=cm.jet)
                     ax.set_aspect('equal', adjustable='box')
-                    ax.set_title(ZernikeNames[i]  + '\n ' + 
-                                 'n=' + str(ZernikeModeNames[i][1]) + ' m=' + str(ZernikeModeNames[i][0]) + ' i=' + str(i) +
-                                 '\nPV = ' + str(PVs[i]) + ' nm' +
-                                 '\nSFE = ' + str(SFEs[i]) + ' nm RMS' 
+                    ax.set_title(ZernikeNames[-i]  + '\n ' + 
+                                 'n=' + str(ZernikeModeNames[-i][1]) + ' m=' + str(ZernikeModeNames[-i][0]) + ' i=' + str(i) +
+                                 '\nPV = ' + str(PVs[-i]) + ' nm' +
+                                 '\nSFE = ' + str(SFEs[-i]) + ' nm RMS' 
                                  )
                     with H[j%6]:
                         st.pyplot(fig) 
