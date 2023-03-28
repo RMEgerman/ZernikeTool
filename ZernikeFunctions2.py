@@ -357,7 +357,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             
             DZ=DZ - Zernikes[:,i] - Zernikes[:,l]
             mag=str( np.format_float_positional(np.sqrt(((PVs[i]/2)**2)+((PVs[l]/2))**2),precision=4  ))
-            phase=str(np.round(   np.arctan2(PVs[i],PVs[l])*180./np.pi),3)
+            phase=str(np.arctan2(PVs[i],PVs[l])*180./np.pi)
             resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
             resRMS=str(np.round(rms(DZ) * UnitFactor,3))
             Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
