@@ -365,10 +365,10 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
         else:
             continue
     Zern=Residuals[:,0]   
-    Mag=Residuals[:,0]
-    Phase=Residuals[:,0]
-    ResRMS=Residuals[:,0]
-    ResPV=Residuals[:,0]
+    Mag=Residuals[:,1]
+    Phase=Residuals[:,2]
+    ResRMS=Residuals[:,3]
+    ResPV=Residuals[:,4]
     return Zern,Mag,Phase,ResRMS,ResPV
 
 
