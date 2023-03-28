@@ -378,7 +378,7 @@ def ZernikeNamesFunc(m_max):
     if (m_max == 4):
         ro = [0,1,2,4,3,5,6,7,8,9,10,11,12]
         ZernikeNames = [val for (_, val) in sorted(zip(ro, ZernikeNames), key=lambda x: x[0])]
-    return ZernikeNames   
+    return ZernikeNames    
 
 def ZernikeNamesFunc2():
     ZernikeNames2 = [' Piston',' Tip/Tilt',' Defocus',' Pri Astigmatism',' Pri Coma',
@@ -394,7 +394,12 @@ def ZernikeTableFunc(mnlist, ZernikeNames, m_max):
     ZernikeNames = ZernikeNamesFunc(m_max)
 
     for i in range(len(mnlist)):
-        ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])     
+        ZernikeTable.append(str(mnlist[i])+ZernikeNames[i])
+    ZernikeTable.append(' ')
+    ZernikeTable.append('Original data:')
+    ZernikeTable.append('Quadratic Sum Zernike Terms:')
+    ZernikeTable.append('Residual error:')
+        
     return ZernikeTable
 
 def ZernikeTableFunc2(mnlist, ZernikeNames, m_max):
