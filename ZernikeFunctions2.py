@@ -364,8 +364,12 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             j=j+1
         else:
             continue
- 
-    return Residuals
+    Zern=Residuals[:,0]   
+    Mag=Residuals[:,0]
+    Phase=Residuals[:,0]
+    ResRMS=Residuals[:,0]
+    ResPV=Residuals[:,0]
+    return Zern,Mag,Phase,ResRMS,ResPV
 
 
 
@@ -564,7 +568,7 @@ def main():
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
             ZernikeNames2 = ZernikeNamesFunc2()
-            Residuals = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
+            Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
             ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2, m_max)
        
             with st.expander('Zernike decompostion plots, sorted'):
@@ -623,9 +627,10 @@ def main():
                 #st.write(dfTable) 
 
                 st.table(dfTable.style)
-                
+             # Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
+               
             with st.expander('Zernike Residual Table - Mag/Phase thru Quin Spherical'):
-                dfTable2 = pd.DataFrame({'Zernike: Mag [nm] Phase[deg] ResRMS[nm] resPV[nm]' : ZernikeTable2}) 
+                dfTable2 = pd.DataFrame({'Zernike' : Zern, 'Mag [nm]' : Mag, ' Phase[deg]' : Phase, 'ResRMS[nm]' : ResRMS, 'ResPV[nm]' : ResPV}) 
                 st.table(dfTable2.style)
                
                 
