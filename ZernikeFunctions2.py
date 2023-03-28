@@ -127,7 +127,7 @@ def dataselection(data, shapeFile):
             return x, y, dz, R, phi, rho , Rmax
         
 def SFE_calc(dz,UnitFactor):
-    SFE  = np.round(np.std(dz)  * UnitFactor,2)
+    SFE  = np.round(rms(dz)  * UnitFactor,2)
     return SFE
 
 def PV_calc(dz,UnitFactor):
@@ -326,7 +326,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
     PVs[standard_seq] = PVs[fringe_seq]
     Zernikes[:,standard_seq] = Zernikes[:,fringe_seq]
     Residuals=np.empty(shape=[23,5],dtype="<U10")
-    Residuals[0,:]=['Input Surface','','',str(rms(DZ) * UnitFactor),str(np.round((np.max(DZ) - np.min(DZ)) * UnitFactor,3))]
+    Residuals[0,:]=['Input Surface','','',str(np.round(rms(DZ) * UnitFactor,3)),str(np.round((np.max(DZ) - np.min(DZ)) * UnitFactor,3))]
     j=1
     for i in range(len(fringe_seq)-1):
         m = B[i][0]
@@ -357,7 +357,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             
             DZ=DZ - Zernikes[:,i] - Zernikes[:,l]
             mag=str( np.format_float_positional(np.sqrt(((PVs[i]/2)**2)+((PVs[l]/2))**2),precision=4  ))
-            phase=str(np.arctan2(PVs[i],PVs[l])*180./np.pi)
+            phase=str(npround(np.arctan2(PVs[i],PVs[l])*180./np.pi),3)
             resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
             resRMS=str(np.round(rms(DZ) * UnitFactor,3))
             Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
@@ -605,9 +605,9 @@ def main():
                 PistonTable, TipTiltTable = PistonTipTiltTableFunc(Xlinear,PTT,PVs,Rmax,UnitFactor,Zernikes)
                 SFEColumn = SFEs
                 SFEColumn = np.append(SFEColumn, ' ')
-                SFEColumn = np.append(SFEColumn,  str(np.round(np.std(dz)*UnitFactor,3))    )
+                SFEColumn = np.append(SFEColumn,  str(np.round(rms(dz)*UnitFactor,3))    )
                 SFEColumn = np.append(SFEColumn,  np.round(np.sum(np.sqrt(np.sum(SFEs**2))),3) )
-                SFEColumn = np.append(SFEColumn,  str(np.round(np.std(ZernikeDelta)*UnitFactor,3))    )
+                SFEColumn = np.append(SFEColumn,  str(np.round(rms(ZernikeDelta)*UnitFactor,3))    )
                 
                 # PVs[0] = len(mnlist)
                 # PVs[1] = m_max
