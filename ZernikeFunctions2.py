@@ -620,8 +620,8 @@ def main():
                 st.table(dfTable.style)
                 
             with st.expander('Zernike Residual Table - Mag/Phase thru Quin Spherical'):
-                dfTable = pd.DataFrame({'Zernike: Mag [nm] Phase[deg] ResRMS[nm] resPV[nm]' : ZernikeTable2}) 
-                st.table(dfTable.style)
+                dfTable2 = pd.DataFrame({'Zernike: Mag [nm] Phase[deg] ResRMS[nm] resPV[nm]' : ZernikeTable2}) 
+                st.table(dfTable2.style)
                
                 
         with st.expander('X and Y locations of all datapoints'):
