@@ -558,7 +558,7 @@ def main():
             ZernikeNames = ZernikeNamesFunc(m_max)
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
-            Residuals = CalcZernikeResiduals(rho,phi,dz,UnitFactor)            
+            Residuals = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor)            
             ZernikeNames2 = ZernikeNamesFunc2()
             ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2, m_max)
        
