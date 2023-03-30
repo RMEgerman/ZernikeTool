@@ -34,7 +34,7 @@ def readme():
         st.markdown(link,unsafe_allow_html=True)
         
         st.write("""
-     The web-app enables substraction of an aspheric curvature from the uploaded data-set. \n
+     The web-app enables substraction of an aspheric curvature from the uploaded data-set. 
      This tends to be applicable for a surface made from metrology data. \n
      The aspheric curvature is defined according to the following equation:
         """)
