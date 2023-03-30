@@ -472,7 +472,7 @@ def main():
         with st.sidebar:
             st.write(' \# data points = ' + str(shapeFile[0]) + ', # columns = ' + str(shapeFile[1]) )
             GridSize = st.slider('Select interpolation grid size for 3D plotting', 20, 300, (100))
-            units = st.radio('data units:', ('millimeters', 'meters'))
+            units = st.radio('data units:', ('meters', 'millimeters'))
             
         if units == 'meters':
             UnitFactor = 1E9
@@ -495,7 +495,7 @@ def main():
             if ZernikeDecomposition_opt:
                 NN, mm = ZernikeTerms()
                 NN = [3,4,6,10,15,21,28,37,45,55,66,78,91,105]
-                default_NN = NN.index(4)
+                default_NN = NN.index(10)
                 N_Zernikes = st.selectbox('# Zernike terms: ',NN,index = default_NN)
                 index = NN.index(N_Zernikes)  
                 m_max = N_Zernikes
