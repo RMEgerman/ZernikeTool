@@ -33,9 +33,11 @@ def readme():
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
         st.markdown(link,unsafe_allow_html=True)
         
-        st.write('''The web-app enables substraction of an aspheric curvature from the uploaded data-set. \n
-    This tends to be applicable for a surface made from metrology data. \n
-    The aspheric curvature is defined according to the following equation:''')
+        st.write("""
+     The web-app enables substraction of an aspheric curvature from the uploaded data-set. \n
+     This tends to be applicable for a surface made from metrology data. \n
+     The aspheric curvature is defined according to the following equation:
+        """)
         
         st.latex(r'''
                  Z(r) = \frac{Cr^2}{1+\sqrt{1-(1+k)\cdot C^2r^2}}
