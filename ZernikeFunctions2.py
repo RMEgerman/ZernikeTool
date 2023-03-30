@@ -27,13 +27,14 @@ def readme():
         st.write("""
     With this streamlit web-app a Zernike decomposition can be made of sag-data of circular shaped optics. \n
     A data set can be uploaded which contains the x- and y-coordinates and the dz values (sag data). \n
-    The data-file should be in .xlsx or .txt format. arctan2(y,x), fix tip tilt \n
+    The data-file should be in .xlsx or .txt format. Rows containing a # may be used as comments and are ignored. \n
     
         """)
         link='The Zernike decomposition is done according to the formulation as described here: [link](https://en.wikipedia.org/wiki/Zernike_polynomials)'
         st.markdown(link,unsafe_allow_html=True)
         
-        st.write('''the web-app enables to substract an aspheric curvature from the uploaded data-set. 
+        st.write('''The web-app enables to substract an aspheric curvature from the uploaded data-set. \n
+                 This tends to be applicable for a surface made from metrology data \n
                  The aspheric curvature is defined according to the following equation:''')
         
         st.latex(r'''
