@@ -306,7 +306,8 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             Zs = Zs.reshape(len(Zs))*np.sin(abs(m)*phi)
 
         ZernikeInfluenceFunctions[:,i] = Zs
-        
+    # Find Zernike Coefficients: Xlinear
+    # Xlinear = np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(ZernikeInfluenceFunctions),ZernikeInfluenceFunctions)),np.transpose(ZernikeInfluenceFunctions)),dz)        
     Xlinear = np.dot(np.linalg.pinv(ZernikeInfluenceFunctions),dz)
     Zernikes = Xlinear*ZernikeInfluenceFunctions
     # SFEs = np.zeros((m_max))
