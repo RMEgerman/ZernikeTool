@@ -455,8 +455,8 @@ def plotly_function(x,y,title):
 
 
 def main():
-    PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
     st.set_page_config(layout="wide")
+    PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
     with st.sidebar:
         st.title('Zernike Decomposition Tool')
         st.write('info: jan.devreugd@tno.nl')
@@ -549,7 +549,7 @@ def main():
                 with col2:
                     plotlyfunc(x,y,xi,yi,dzASphFit,UnitFactor, 'Best fit Asphere fit: <br> The best fitting Asphere-radius is ' + str(np.round(parsAS[0],3)) + ' ' +  str(units) + 
                                '. <br> The best fitting conical constant is ' + str(np.round(parsAS[1],3)) + '.')
-        
+abcdefgh        
         if Asphere_M:
             Asphere_User = funcASphere(R,Radius_User,Kappa_User,0)
             FitAsphereUser = dzPTT - Asphere_User
