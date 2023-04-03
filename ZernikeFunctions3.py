@@ -354,9 +354,6 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
             j=j+1
         elif (m > 0) and (n > 0):
-            if (i ==1):
-                
-
             for k in range(len(fringe_seq)):
 
                 if (-(B[k][0]) == B[i][0]) and (B[k][1] == B[i][1]):
