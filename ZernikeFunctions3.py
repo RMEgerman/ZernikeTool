@@ -456,7 +456,6 @@ def plotly_function(x,y,title):
 
 def main():
     st.set_page_config(layout="wide")
-    PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
     with st.sidebar:
         st.title('Zernike Decomposition Tool')
         st.write('info: jan.devreugd@tno.nl')
@@ -490,6 +489,7 @@ def main():
         with st.sidebar:
             x,y,dz,R, phi, rho , Rmax= dataselection(data,shapeFile)
             # dzPTT, PTT = TipTilt(x, y, dz)
+            PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
             dzPTT = dz - Piston - Tip - Tilt
             xi,yi = gridarrays(x,y,GridSize) 
 
