@@ -360,10 +360,11 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
                 if (-(B[k][0]) == B[i][0]) and (B[k][1] == B[i][1]):
                     l=k
                     
-            Tip = Zernikes[:,i]
-            Tilt = Zernikes[l]
-            PTT[0,1] = PVs[i]/2
-            PTT[0,2] = PVs[l]/2
+            if (i==2):
+                Tip = Zernikes[:,i]
+                Tilt = Zernikes[l]
+                PTT[1,0] = PVs[l]/2
+                PTT[2,0] = PVs[i]/2 
             DZ = DZ - Zernikes[:,i] - Zernikes[:,l]
             mag = str(np.format_float_positional(np.sqrt(((PVs[i]/2)**2)+((PVs[l]/2))**2),precision=4  ))
             phase = str(np.round((np.arctan2(PVs[i],PVs[l])*180./np.pi),3))
