@@ -489,7 +489,7 @@ def main():
         with st.sidebar:
             x,y,dz,R, phi, rho , Rmax= dataselection(data,shapeFile)
             # dzPTT, PTT = TipTilt(x, y, dz)
-            PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
+            PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2)            
             dzPTT = dz - Piston - Tip - Tilt
             xi,yi = gridarrays(x,y,GridSize) 
 
