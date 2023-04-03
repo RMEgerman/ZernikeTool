@@ -489,6 +489,7 @@ def main():
         with st.sidebar:
             x,y,dz,R, phi, rho , Rmax= dataselection(data,shapeFile)
             # dzPTT, PTT = TipTilt(x, y, dz)
+            ZernikeNames2 = ZernikeNamesFunc2()
             PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2)            
             dzPTT = dz - Piston - Tip - Tilt
             xi,yi = gridarrays(x,y,GridSize) 
@@ -577,7 +578,6 @@ def main():
             ZernikeNames = ZernikeNamesFunc(m_max)
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
-            ZernikeNames2 = ZernikeNamesFunc2()
             # Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
             ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2, m_max)
        
