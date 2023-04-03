@@ -332,6 +332,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
     Residuals=np.empty(shape=[23,5],dtype="<U10")
     Residuals[0,:]=['Input Surface','','',str(np.round(rms(DZ) * UnitFactor,3)),str(np.round((np.max(DZ) - np.min(DZ)) * UnitFactor,3))]
     j=1
+    PTT=np.empty(3,0)
     for i in range(len(fringe_seq)-1):
         m = B[i][0]
         n = B[i][1]
@@ -578,6 +579,7 @@ def main():
             ZernikeNames = ZernikeNamesFunc(m_max)
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
+
             # Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
             ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2, m_max)
        
