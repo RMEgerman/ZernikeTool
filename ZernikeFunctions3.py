@@ -152,19 +152,19 @@ def plotlyfunc(x,y,xi,yi,dz,UnitFactor,title):
                       'SFE = ' + SFE + 'nm RMS', autosize=False,width = W, height = H, title_x = 0.5)
     st.plotly_chart(fig, use_container_width=True)
    
-def TipTilt(x,y,dz):
-    A = np.ones((len(x),3))
-    A[:,0] = 1.*A[:,0]
-    A[:,1] = A[:,1] * x 
-    A[:,2] = A[:,2] * y 
+# def TipTilt(x,y,dz):
+#     A = np.ones((len(x),3))
+#     A[:,0] = 1.*A[:,0]
+#     A[:,1] = A[:,1] * x 
+#     A[:,2] = A[:,2] * y 
     
     #A[:,3] = np.sqrt(A[:,1]**2 + A[:,2]**2)
     
-    Xlinear = np.dot(np.linalg.pinv(A),dz)
-    Xlinear = np.linalg.lstsq(A,dz,rcond=None)[0] 
-    Fit = np.sum(Xlinear*A,axis = 1)
-    ddz = dz - Fit
-    return ddz, Xlinear
+    # Xlinear = np.dot(np.linalg.pinv(A),dz)
+    # Xlinear = np.linalg.lstsq(A,dz,rcond=None)[0] 
+    # Fit = np.sum(Xlinear*A,axis = 1)
+    # ddz = dz - Fit
+    # return ddz, Xlinear
 
 def gridarrays(x,y,GridSize):
     X = np.linspace(min(x),max(x),GridSize)
@@ -342,7 +342,8 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             resPV=str(np.round((np.max(DZ,axis=0) - np.min(DZ,axis=0)) * UnitFactor,3))
             resRMS=str(np.round(rms(DZ) * UnitFactor,3))
             Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
-
+            Piston = Zernikes[:,0]
+            PTT[0,0] = mag
             j=j+1
         elif (m == 0) and (n > 0):
             DZ=DZ-Zernikes[:,i]
@@ -353,12 +354,18 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
             Residuals[j,:]=[ZernikeNames2[j-1],mag,phase,resRMS,resPV]
             j=j+1
         elif (m > 0) and (n > 0):
+            if (i ==1):
+                
+
             for k in range(len(fringe_seq)):
 
                 if (-(B[k][0]) == B[i][0]) and (B[k][1] == B[i][1]):
                     l=k
-                    break
-            
+                    
+            Tip = Zernikes[:,i]
+            Tilt = Zernikes[l]
+            PTT[0,1] = PVs[i]/2
+            PTT[0,2] = PVs[l]/2
             DZ = DZ - Zernikes[:,i] - Zernikes[:,l]
             mag = str(np.format_float_positional(np.sqrt(((PVs[i]/2)**2)+((PVs[l]/2))**2),precision=4  ))
             phase = str(np.round((np.arctan2(PVs[i],PVs[l])*180./np.pi),3))
@@ -373,7 +380,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
     Phase=Residuals[:,2]
     ResRMS=Residuals[:,3]
     ResPV=Residuals[:,4]
-    return Zern,Mag,Phase,ResRMS,ResPV
+    return PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV
 
 
 
@@ -451,6 +458,7 @@ def plotly_function(x,y,title):
 
 
 def main():
+    PTT,Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
     st.set_page_config(layout="wide")
     with st.sidebar:
         st.title('Zernike Decomposition Tool')
@@ -484,7 +492,8 @@ def main():
         
         with st.sidebar:
             x,y,dz,R, phi, rho , Rmax= dataselection(data,shapeFile)
-            dzPTT, PTT = TipTilt(x, y, dz)
+            # dzPTT, PTT = TipTilt(x, y, dz)
+            dzPTT = dz - Piston - Tip - Tilt
             xi,yi = gridarrays(x,y,GridSize) 
 
             SphereFit_opt = st.checkbox('Calculate best fitting sphere and asphere')
@@ -572,7 +581,7 @@ def main():
             ZernikeTable = ZernikeTableFunc(mnlist, ZernikeNames, m_max)
             
             ZernikeNames2 = ZernikeNamesFunc2()
-            Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
+            # Piston,Tip,Tilt,Zern,Mag,Phase,ResRMS,ResPV = CalcZernikeResiduals(rho,phi,data4Zernike,UnitFactor,ZernikeNames2)            
             ZernikeTable2 = ZernikeTableFunc2(mnlist, ZernikeNames2, m_max)
        
             with st.expander('Zernike decompostion plots, sorted'):
