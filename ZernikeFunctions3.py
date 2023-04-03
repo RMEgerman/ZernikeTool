@@ -332,7 +332,7 @@ def CalcZernikeResiduals(rho,phi,dz,UnitFactor,ZernikeNames2):
     Residuals=np.empty(shape=[23,5],dtype="<U10")
     Residuals[0,:]=['Input Surface','','',str(np.round(rms(DZ) * UnitFactor,3)),str(np.round((np.max(DZ) - np.min(DZ)) * UnitFactor,3))]
     j=1
-    PTT=np.empty(3,0)
+    PTT=np.empty(shape=[3,0])
     for i in range(len(fringe_seq)-1):
         m = B[i][0]
         n = B[i][1]
