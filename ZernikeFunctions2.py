@@ -146,7 +146,7 @@ def plotlyfunc(x,y,xi,yi,dz,UnitFactor,title):
     
     SFE = str(SFE_calc(dz, UnitFactor))
     PV = str(PV_calc(dz, UnitFactor))
-    fig = go.Figure(go.Surface(x=xi,y=yi,z=dz_grid,colorscale='jet'))
+    fig = go.Figure(go.Surface(x=xi,y=yi,z=dz,colorscale='jet'))
     fig.update_layout(title=title + '<br>' + 
                       'PV = ' + PV + 'nm' + '<br>' + 
                       'SFE = ' + SFE + 'nm RMS', autosize=False,width = W, height = H, title_x = 0.5)
