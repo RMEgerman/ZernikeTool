@@ -116,10 +116,10 @@ def dataselection(data, shapeFile):
             
             x = data.iloc[:,columnx-1].to_numpy()
             x = x.reshape((len(x)))
-#            x = x - np.mean(x)        
+            x = x - np.mean(x)        
             y = data.iloc[:,columny-1].to_numpy()
             y = y.reshape((len(y)))
-#           y = y - np.mean(y)
+            y = y - np.mean(y)
             dz = data.iloc[:,columnz-1].to_numpy()
             dz = dz.reshape((len(dz)))
             
@@ -146,7 +146,7 @@ def plotlyfunc(x,y,xi,yi,dz,UnitFactor,title):
     
     SFE = str(SFE_calc(dz, UnitFactor))
     PV = str(PV_calc(dz, UnitFactor))
-    fig = go.Figure(go.Surface(x=xi,y=yi,z=dz_grid,colorscale='jet'))
+    fig = go.Figure(go.Surface(x=xi,y=yi,z=dz_grid, colorscale='jet'))
     fig.update_layout(title=title + '<br>' + 
                       'PV = ' + PV + 'nm' + '<br>' + 
                       'SFE = ' + SFE + 'nm RMS', autosize=False,width = W, height = H, title_x = 0.1)
@@ -154,7 +154,6 @@ def plotlyfunc(x,y,xi,yi,dz,UnitFactor,title):
    
 def TipTilt(x,y,dz):
     A = np.ones((len(x),3))
-    A[:,0] = 1.*A[:,0]
     A[:,1] = A[:,1] * x 
     A[:,2] = A[:,2] * y 
     
@@ -517,6 +516,7 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 plotlyfunc(x,y,xi,yi,dz,UnitFactor, 'Original data:')
+            with col2:
                 plotlyfunc(x,y,xi,yi,dzPTT,UnitFactor,  'Original data minus piston, tip and tilt:')
                 if units == 'meters':
                     st.write('piston = ' + str(np.round(1E6*PTT[0],3)) + ' $\mu$m')
